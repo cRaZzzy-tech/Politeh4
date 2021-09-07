@@ -1,0 +1,298 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Изменение заявки{% endblock %}
+
+{% block content %}
+
+<script src="{% static '/assets/js/jquery-3.3.1.min.js' %}"></script>
+<script>
+
+//дожидаемся полной загрузки страницы
+/*
+window.onload = function () {
+
+    //alert(1);
+    //получаем идентификатор элемента
+    var a = document.getElementById('search');
+
+    //вешаем на него событие
+    a.onclick = function() {
+        //производим какие-то действия
+        alert(1);
+        document.getElementById("dop").innerHTML = "CLARO!";
+        //предотвращаем переход по ссылке href
+        return false;
+    }
+}
+*/
+
+    document.body.onclick = function (e) {
+        e = e || event;
+        //alert(e);
+        target = e.target || e.srcElement;
+        var today = new Date();
+
+        //alert(target.name);
+        //alert(target.id.indexOf('search') );
+        console.log(target.id)
+        if ((target.id == "clear_period")){
+
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            today = yyyy + '-' + mm + '-' + dd;
+
+            document.getElementById("id_my_date_field").value = today;
+            document.getElementById("id_my_date_field1").value = today;
+         }else
+
+        if ((target.id == "today")){
+
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            today = yyyy + '-' + mm + '-' + dd;
+
+            document.getElementById("id_my_date_field").value = today;
+            document.getElementById("id_my_date_field1").value = today;
+         }else
+
+        if ((target.id == "week")){
+            var day = today.getDay();
+            if (day==0)
+            {
+                dd = String(today.getDate()).padStart(2, '0');
+                mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                yyyy = today.getFullYear();
+                var dd = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("id_my_date_field1").value = dd;
+                today.setHours(-24 * 6);
+
+                dd = String(today.getDate()).padStart(2, '0');
+                mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                yyyy = today.getFullYear();
+                today = yyyy + '-' + mm + '-' + dd;
+
+                document.getElementById("id_my_date_field").value = today;
+            }else if (day != 1){
+                today.setHours(-24 * (day-1));
+                dd = String(today.getDate()).padStart(2, '0');
+                mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                yyyy = today.getFullYear();
+                var dd = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("id_my_date_field").value = dd;
+
+                today.setHours(+24 * 6);
+                dd = String(today.getDate()).padStart(2, '0');
+                mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                yyyy = today.getFullYear();
+                today = yyyy + '-' + mm + '-' + dd;
+
+                document.getElementById("id_my_date_field1").value = today;
+            }else{
+                dd = String(today.getDate()).padStart(2, '0');
+                mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                yyyy = today.getFullYear();
+                var dd = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("id_my_date_field").value = dd;
+                today.setHours(+24 * 6);
+
+                dd = String(today.getDate()).padStart(2, '0');
+                mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                yyyy = today.getFullYear();
+                today = yyyy + '-' + mm + '-' + dd;
+
+                document.getElementById("id_my_date_field1").value = today;
+            }
+        }else
+
+        if ((target.id == "month")){
+            var date = new Date();
+            var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+            dd = String(firstDay.getDate()).padStart(2, '0');
+            mm = String(firstDay.getMonth() + 1).padStart(2, '0'); //January is 0!
+            yyyy = firstDay.getFullYear();
+            dd = yyyy + '-' + mm + '-' + dd;
+            document.getElementById("id_my_date_field").value = dd;
+
+            dd = String(lastDay.getDate()).padStart(2, '0');
+            mm = String(lastDay.getMonth() + 1).padStart(2, '0'); //January is 0!
+            yyyy = lastDay.getFullYear();
+            today = yyyy + '-' + mm + '-' + dd;
+            document.getElementById("id_my_date_field1").value = today;
+        }else
+
+        if ((target.id == "year")){
+            var date = new Date();
+            var firstDay = new Date(date.getFullYear(), 0, 1);
+            var lastDay = new Date(date.getFullYear(), 11 + 1, 0);
+
+            dd = String(firstDay.getDate()).padStart(2, '0');
+            mm = String(firstDay.getMonth() + 1).padStart(2, '0'); //January is 0!
+            yyyy = firstDay.getFullYear();
+            dd = yyyy + '-' + mm + '-' + dd;
+            document.getElementById("id_my_date_field").value = dd;
+
+            dd = String(lastDay.getDate()).padStart(2, '0');
+            mm = String(lastDay.getMonth() + 1).padStart(2, '0'); //January is 0!
+            yyyy = lastDay.getFullYear();
+            today = yyyy + '-' + mm + '-' + dd;
+            document.getElementById("id_my_date_field1").value = today;
+        }
+    }
+
+</script>
+
+<style>
+
+a.disabled {
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;  /* устанавливаем курсор в виде стрелки */
+    color: #999; /* цвет текста для нективной ссылки */
+}
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+    }
+#tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+#tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+#tbody td,
+#tbody tr:before {
+  padding: .1em .5em;
+}
+
+#tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+  background-color: #DCDCDC;
+}
+.raz {
+  overflow: auto;  /* добавить полосу прокрутки */
+  height: 10em;
+  border: 1px solid red;
+}
+
+  #card{
+  overflow-y: scroll;
+  height: 80.5vh;
+  }
+
+
+
+</style>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Период</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+            <form method="post">
+              <div class="modal-body">
+                  <button type="button" id="today" name="today" class="btn btn-sm btn-primary">Сегодня</button>
+                  <button type="button" id="week" name="week" class="btn btn-sm btn-primary">Неделя</button>
+                  <button type="button" id="month" name="newsletter_sub1" class="btn btn-sm btn-primary">Месяц</button>
+                  <button type="button" id="year" name="newsletter_sub2" class="btn btn-sm btn-primary">Год</button>
+              <br><br>
+                  {% csrf_token %}
+                  {% bootstrap_form contractor layout='horizontal' size='sm' %}
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Отмена</button>
+                  <button type="submit" id="clear_period" onclick="clear_period()" class="btn btn-sm btn-primary">Очистить</button>
+                  <button type="submit" name="newsletter_sub" class="btn btn-sm btn-primary">Применить</button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+<div class="row">
+    <div class="col-md-5">
+        <h4 style="color:grey;"><i class="fa fa-edit"></i> Метод GPS</h4>
+    </div>
+    <div class="col-md-7">
+        <h4 id="icons" style="text-align:right">
+            <!--
+            <a class="icon" style="color:grey;" data-toggle="modal" data-target="#exampleModal" href="#exampleModal"  role="button"><i class="fa fa-download"style="padding: 3px;"></i></a>-->
+<!--            <a class="icon" style="color:grey;" href="{% url 'energy:add_post_gps' %}" title="Загрузить измерения" role="button"><i class="fa fa-download"style="padding: 3px;"></i></a>-->
+            <a class="icon" style="color:grey;" data-toggle="modal" title="Период" data-target="#exampleModal"><i class="fa fa-calendar" style="padding: 3px;"></i></a>
+        </h4>
+    </div>
+
+<div class="col-sm-4 col-md-12">
+    <div class="card" id="card">
+                <div class="table-responsive" >
+                    <table class="table table-striped" class="table table-hover">
+                        <thead class="sticky" style="padding:20px">
+                        <tr>
+                         <!--       <th style="padding: 1px;">Column 1</th>
+                                <th style="padding: 1px;">Column 2</th>-->
+                                <th class="sticky" style="padding: 0; padding-left:10px; width: 4%; text-align:left">№</th>
+<!--                                <th class="sticky" style="padding: 0; width: 3%; text-align:center"><i class="fas fa-check-double" style="color:lightgrey"></i></th>-->
+                                <th class="sticky" style="padding: 0; width: 7%; text-align:left; padding-left:10px;">Создан</th>
+                                <th class="sticky" style="padding: 0; padding-left:20px; width: 20%; text-align:left">Файл1</th>
+                                <th class="sticky" style="padding: 0; padding-left:20px; width: 20%; text-align:left">Файл2</th>
+                                <th class="sticky" style="padding: 0; padding-left:20px; width: 5%; text-align:left">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dynamic">
+                        {% for doc in docs %}
+                        <tr>
+                                <td style="padding: 0; padding-left:10px" scope="row">
+                                    {{ doc.pk}}
+                                </td>
+                                <td style="padding: 0; padding-left:10px" scope="row">
+                                    {{ doc.date|date:"d.m.y"}}
+                                </td>
+                                <td style="padding: 0; padding-left:10px" scope="row">
+                                    {{ doc.file1 }}
+                                </td>
+                                <td style="padding: 0; padding-left:10px" scope="row">
+                                    {{ doc.file2 }}
+                                </td>
+                                 <td style="padding: 0; padding-left:10px; text-align: center" scope="row">
+                                        <a class="icon" id="work" name="search" name="search{{ forloop.counter }}" href="{% url 'energy:search_gps' pk=doc.pk %}" role="button" title="Просмотр"><i class="fa fa-search" style="color:darkblue"></i></a>
+                                        <a class="icon" href="{% url 'energy:gps_copy' pk=doc.pk %}" role="button"><i class="fa fa-copy"title="Копия" style="color:darkblue"></i></a>
+                                     {% comment %}
+                                        <a disabled class="icon" id="work" name="search" name="search{{ forloop.counter }}" href="{% url 'energy:step_gps' pk=doc.pk %}" role="button" title="Шаг2"><i class="fa fa-play"style="color:green"></i></a>
+                                     {% endcomment %}
+                                        <a class="icon" href="{% url 'energy:remove_gps' pk=doc.pk %}" role="button"><i class="fa fa-remove"title="Удалить" style="color:darkblue"></i></a>
+                                        <a class="icon" href="{% url 'energy:xls_gps_final' pk=doc.pk %}" role="button"><i class="fa fa-file-excel"title="export xls" style="color:darkblue"></i></a>
+                                </td>
+                        </tr>
+                                        {% endfor %}
+                    </tbody>
+                </table>
+
+              <!--  </div>-->
+
+        </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+
+

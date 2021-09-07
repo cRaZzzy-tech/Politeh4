@@ -1,0 +1,26 @@
+<!-- templates/post.html -->
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Изменение заявки{% endblock %}
+
+{% block content %}
+
+<style>
+  label,input{
+  color:black
+  }
+</style>
+
+<h1 style="color:darkblue">Загрузка файла</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form1.as_p }}
+
+  <br><br>
+  {{ form2.as_p }}
+  <button class="btn btn-secondary" type="submit">Загрузить</button>
+</form>
+
+{% endblock %}

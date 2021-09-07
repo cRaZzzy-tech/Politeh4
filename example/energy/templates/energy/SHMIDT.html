@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type"><title>table_1</title>
+
+<script src="jssrc/jquery.min.js"></script>
+<script src="jssrc/jquery.csv-0.71.min.js"></script>
+<script src="jssrc/jquery.jexcel.js"></script>
+<link rel="stylesheet" href="jssrc/jquery.jexcel.css" type="text/css" />
+
+<style type="text/css">
+.auto-style2 {
+	text-align: center;
+}
+.auto-style3 {
+	border-width: 0;
+}
+</style>
+
+<script type="text/javascript">
+function FP_swapImg() {//v1.0
+    var doc=document,args=arguments,elm,n;
+    doc.$imgSwaps=new Array();
+    for(n=2; n<args.length; n+=2) {
+        elm=FP_getObjectByID(args[n]);
+        if(elm) {
+            doc.$imgSwaps[doc.$imgSwaps.length]=elm;
+            elm.$src=elm.src; elm.src=args[n+1];
+        }
+    }
+}
+
+function FP_preloadImgs() {//v1.0
+    var d=document,a=arguments; if(!d.FP_imgs) d.FP_imgs=new Array();
+    for(var i=0; i<a.length; i++) {
+        d.FP_imgs[i]=new Image;
+        d.FP_imgs[i].src=a[i];
+    }
+}
+
+function FP_getObjectByID(id,o) {//v1.0
+    var c,el,els,f,m,n;
+    if(!o)
+        o=document;
+    if(o.getElementById)
+        el=o.getElementById(id);
+    else if(o.layers)
+        c=o.layers;
+    else if(o.all)
+        el=o.all[id];
+    if(el)
+        return el;
+    if(o.id==id || o.name==id)
+        return o;
+    if(o.childNodes)
+        c=o.childNodes;
+    if(c)
+    for(n=0; n<c.length; n++) {
+        el=FP_getObjectByID(id,c[n]);
+        if(el)
+            return el;
+    }
+    f=o.forms;
+    if(f)
+    for(n=0; n<f.length; n++) {
+        els=f[n].elements;
+        for(m=0; m<els.length; m++){
+            el=FP_getObjectByID(id,els[n]);
+            if(el)
+                return el;
+        }
+    }
+    return null;
+}
+</script>
+
+<!-- used as unvisible temporary storage -->
+<div id="response_array" style="left: 9999px; position: fixed;"></div>
+
+<script type="text/javascript">
+
+// global variables
+var states_param_name = [], states_param_value = [];
+var selected_media = 'usb';
+
+function FP_swapImg() {//v1.0
+    var doc=document,args=arguments,elm,n;
+    doc.$imgSwaps=new Array();
+    for(n=2; n<args.length; n+=2) {
+        elm=FP_getObjectByID(args[n]);
+        if(elm) {
+            doc.$imgSwaps[doc.$imgSwaps.length]=elm;
+            elm.$src=elm.src;
+            elm.src=args[n+1];
+        }
+    }
+}
+
+function FP_preloadImgs() {//v1.0
+    var d=document,a=arguments;
+    if(!d.FP_imgs)
+        d.FP_imgs=new Array();
+    for(var i=0; i<a.length; i++) {
+        d.FP_imgs[i]=new Image; d.FP_imgs[i].src=a[i];
+    }
+}
+
+function FP_getObjectByID(id,o) {//v1.0
+    var c,el,els,f,m,n;
+    if(!o)
+        o=document;
+    if(o.getElementById)
+        el=o.getElementById(id);
+    else if(o.layers)
+        c=o.layers;
+    else if(o.all)
+        el=o.all[id];
+    if(el)
+        return el;
+    if(o.id==id || o.name==id)
+        return o;
+    if(o.childNodes)
+        c=o.childNodes;
+    if(c)
+        for(n=0; n<c.length; n++) {
+            el=FP_getObjectByID(id,c[n]);
+            if(el)
+                return el;
+        }
+    f=o.forms;
+    if(f)
+        for(n=0; n<f.length; n++) {
+            els=f[n].elements;
+            for(m=0; m<els.length; m++){
+                el=FP_getObjectByID(id,els[n]);
+                if(el)
+                    return el;
+            }
+        }
+    return null;
+}
+
+function http_request(url, dest_id, non_blocking) {
+    var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+    var xhr = new XHR();
+
+    function handleStateChange() {
+        if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				document.getElementById(dest_id).innerHTML = xhr.responseText;
+			}
+        }
+    }
+
+    xhr.onreadystatechange = handleStateChange;
+    xhr.open("GET", url, non_blocking);
+    xhr.send();
+}
+
+function run_cgi(url) {
+	var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+	var xhr = new XHR();
+	xhr.open("GET", url, true);
+	xhr.send();
+}
+
+function select_media_handler(id) {
+	selected_media = id.options[id.selectedIndex].value;
+	selected_media = selected_media.toLowerCase()
+}
+
+function get_name_part(media_type) {
+	switch (media_type) {
+	  case 'usb':
+	    name_part = 'usbdisc';
+	    break;
+	  case 'network1':
+	    name_part = 'disc0';
+	    break;
+	  case 'network2':
+	    name_part = 'disc1';
+	    break;
+	}
+	return name_part;
+}
+
+function get_media_info_filename(media_type) {
+	return 'tmp/get_jpeg_list_info_' + get_name_part(media_type);
+}
+
+// 1: путь до изображения
+function update_online_image(id, interval) {
+console.log('попадаю', id, interval);
+	setInterval(function() {
+	    document.getElementById(id).src = "tmp/video0.jpeg?" + Math.random(0, 100);
+	}, interval);
+}
+
+function show_selected_image(image_url) {
+	var jpeg_selected = document.getElementById('img_jpeg_selected');
+	var jpeg_path = 'tmp/' + get_name_part(selected_media) + '_' + states_table('deviceid') + '_jpegdata/' + image_url;
+	if (jpeg_selected.src != jpeg_path)
+	    jpeg_selected.src = jpeg_path;
+}
+
+var selectionActive = function(instance, firstColumn, lastColumn) {
+	var cellName1 = $(instance).jexcel('getColumnNameFromId', $(firstColumn).prop('id'));
+	cellData1 = $(instance).jexcel('getValue', cellName1);
+	show_selected_image(cellData1);
+}
+
+function csv_table(where_id, col_width_array, csv_headers, file_url) {
+	$('#' + where_id).jexcel({
+		csv: file_url,
+		csvHeaders: csv_headers,
+		colWidths: col_width_array,
+		minSpareRows: -1,
+		onselection: selectionActive,
+	});
+}
+
+function update_csv_table(where_id, col_width_array, csv_headers, interval) {
+	setInterval(function() {
+	    csv_table(where_id, col_width_array, csv_headers, get_media_info_filename(selected_media));
+	}, interval);
+}
+
+function fill_states_table() {
+	http_request('tmp/123.jpeg', 'response_array', true);
+	var params_raw = document.getElementById('response_array').innerHTML.trim();
+	var params_row = 'dfgdgfdfg';
+
+	var params_str = params_raw.split("\n");
+	for (var i = 0; i < params_str.length; i++) {
+		var params = params_str[i].split(",");
+		console.log(params[0]);
+		console.log(params[1]);
+		states_param_name[i] = params[0];
+		states_param_value[i] = params[1];
+	}
+}
+
+function states_table(param_name) {
+	var i = states_param_name.indexOf(param_name);
+	console.dir(i);
+	if (i == -1)
+	    return ''; // return empty string if undefined (not found)
+	return states_param_value[i];
+}
+
+function update_barrier_image(interval) {
+	setInterval(function() {
+		var barrier_image = document.getElementById('barrier_img');
+		states_table('barrier') == 1 ? barrier_image.src = "images/barrier_opened.gif" : barrier_image.src = "images/barrier_closed.gif";
+	}, interval);
+}
+
+</script>
+
+</head>
+<body  contenteditable="false" onload="FP_preloadImgs(/*url*/'images/button19.jpg',/*url*/'images/button1A.jpg',/*url*/'images/button13.jpg',/*url*/'images/button14.jpg',/*url*/'images/barrier_closed.gif',/*url*/'images/barrier_opened.gif',/*url*/'images/button15.jpg',/*url*/'images/button10.jpg',/*url*/'images/button11.jpg')">
+
+<form id="form1" runat="server">
+	<table>
+		<tr>
+			<td>
+      <table style="text-align: left; width: 142px; height: 119px; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: middle; text-align: center;">
+			<img id="img_jpeg_online" src="123.jpeg" alt="Tral Parking 2" title="Tral Parking 2" border="2" height="408" width="500">
+			</td>
+          </tr>
+        </tbody>
+      </table>
+			</td>
+			<td class="auto-style2" valign="top" align="center">
+			<table class="auto-style3">
+				<tr>
+					<td class="auto-style2">
+					<div id="local_time_text">
+			</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+			<img id="barrier_img" alt="Barrier" height="174" src="images/barrier_closed.gif" style="border: 0" width="250" onclick="run_cgi('/cgi-bin/open_barrier.sh?' + Math.random(0, 100))"></td>
+				</tr>
+				<tr>
+					<td>
+					<img id="img3" alt="Open barrier" fp-style="fp-btn: Embossed Rectangle 1; fp-proportional: 0" fp-title="Open barrier" height="80" onmousedown="FP_swapImg(1,0,/*id*/'img3',/*url*/'images/button11.jpg')" onmouseout="FP_swapImg(0,0,/*id*/'img3',/*url*/'images/button12.jpg')" onmouseover="FP_swapImg(1,0,/*id*/'img3',/*url*/'images/button10.jpg')" onmouseup="FP_swapImg(0,0,/*id*/'img3',/*url*/'images/button10.jpg')" src="images/button12.jpg" style="border: 0" width="250" onclick="run_cgi('/cgi-bin/open_barrier.sh?' + Math.random(0, 100))"></td>
+					<button class="btn btn-outline-default" onclick = "console.log('hi')" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;">Распознай номер</button>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>Selected storage
+					<select id="select_media" onChange="select_media_handler(this)">
+						<option>USB</option>
+						<option>Network1</option>
+						<option>Network2</option>
+					</select>
+					</td>
+				</tr>
+				</table>
+			</td>
+			<td class="auto-style2" valign="top" align="center">
+			<img id="img_jpeg_selected" border="2" height="408" width="500">
+			</td>
+		</tr>
+		<tr>
+			<td class="auto-style2">
+			&nbsp;</td>
+			<td class="auto-style2" valign="top" align="center" colspan="2">
+			<div id="last_passes_table" class="auto-style2"></div>
+			</td>
+		</tr>
+		</table>
+</form>
+
+<script type="text/javascript">
+update_online_image('img_jpeg_online', 5000);
+
+setInterval(function() {
+    fill_states_table();
+}, 500);
+
+update_barrier_image(500);
+
+update_csv_table('last_passes_table', [700], true, 500);
+
+setInterval(function() {
+console.log('последнее');
+document.getElementById('local_time_text').innerHTML = states_table('local_time');
+}, 500);
+
+</script>
+
+</body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+

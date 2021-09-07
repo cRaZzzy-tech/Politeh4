@@ -1,0 +1,547 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Изменение заявки{% endblock %}
+
+{% block content %}
+
+<script src="{% static '/assets/js/jquery-3.3.1.min.js' %}"></script>
+<script>
+    function add_row(){
+        var mainTbl = document.getElementById("dynamic");
+        let len = mainTbl.rows.length;
+        console.log(len+1, test)
+        if (test!=0 && test+1!=len){
+            var row = mainTbl.insertRow(test+1);
+            row.setAttribute("onclick","test = this.rowIndex");
+            var cells = mainTbl.rows[0].cells.length;
+            for(i=0; i<cells; i++){
+                  switch(i){
+                case 0:
+                    var num = mainTbl.rows.length+1;
+                    var v = document.getElementById("id_saletesttable_set-"+num+"-name");
+                    if (v != null){
+                        while (v != null){
+                            num++;
+                            v = document.getElementById("id_saletesttable_set-"+num+"-name");
+                        }
+                    }
+                    var cell_absolute = row.insertCell(i);
+                    var cell_os = row.insertCell(i);
+                    var cell_ol = row.insertCell(i);
+                    var cell_oz = row.insertCell(i);
+                    var cell_oy = row.insertCell(i);
+                    var cell_ox = row.insertCell(i);
+                    var cell_S2 = row.insertCell(i);
+                    var cell_L2 = row.insertCell(i);
+                    var cell_z2 = row.insertCell(i);
+                    var cell_y2 = row.insertCell(i);
+                    var cell_x2 = row.insertCell(i);
+                    var cell_S = row.insertCell(i);
+                    var cell_L = row.insertCell(i);
+                    var cell_z = row.insertCell(i);
+                    var cell_y = row.insertCell(i);
+                    var cell_x = row.insertCell(i);
+                    var cell_name = row.insertCell(i);
+
+                    cell_name.style.padding = 0;
+                    cell_name.innerHTML = '<input type="text" class="name" name="filestbl_set-'+num+'-name" value="" class="name" id="id_filestbl_set-'+num+'-name">';
+
+                    cell_x.style.padding = 0;
+                    cell_x.innerHTML = '<input type="number" class="x" name="filestbl_set-'+num+'-x" value="0.0"  step="any" class="x" id="id_filestbl_set-'+num+'-x">';
+
+                    cell_y.style.padding = 0;
+                    cell_y.innerHTML = '<input type="number" class="y" name="filestbl_set-'+num+'-y" value="0.0"  step="any" class="y" id="id_filestbl_set-'+num+'-y">';
+
+                    cell_z.style.padding = 0;
+                    cell_z.innerHTML = '<input type="number" class="z" name="filestbl_set-'+num+'-z" value="0.0"  step="any" class="z" id="id_filestbl_set-'+num+'-z">';
+
+                    cell_L.style.padding = 0;
+                    cell_L.innerHTML = '<input type="number" class="L" name="filestbl_set-'+num+'-l" value="0.0"  step="any" class="l" id="id_filestbl_set-'+num+'-l">';
+
+                    cell_S.style.padding = 0;
+                    cell_S.innerHTML = '<input type="number" class="S" name="filestbl_set-'+num+'-s" value="0.0"  step="any" class="s" id="id_filestbl_set-'+num+'-s">';
+
+                    cell_x2.style.padding = 0;
+                    cell_x2.innerHTML = '<input type="number" class="x2" name="filestbl_set-'+num+'-x2" value="0.0"  step="any" class="x2" id="id_filestbl_set-'+num+'-x2">';
+
+                    cell_y2.style.padding = 0;
+                    cell_y2.innerHTML = '<input type="number" class="y2" name="filestbl_set-'+num+'-y2" value="0.0"  step="any" class="y2" id="id_filestbl_set-'+num+'-y2">';
+
+                    cell_z2.style.padding = 0;
+                    cell_z2.innerHTML = '<input type="number" class="z2" name="filestbl_set-'+num+'-z2" value="0.0"  step="any" class="z2" id="id_filestbl_set-'+num+'-z2">';
+
+                    cell_L2.style.padding = 0;
+                    cell_L2.innerHTML = '<input type="number" class="L2" name="filestbl_set-'+num+'-l2" value="0.0"  step="any" class="l2" id="id_filestbl_set-'+num+'-l2">';
+
+                    cell_S2.style.padding = 0;
+                    cell_S2.innerHTML = '<input type="number" class="S2" name="filestbl_set-'+num+'-s2" value="0.0"  step="any" class="s2" id="id_filestbl_set-'+num+'-s2">';
+
+
+
+                    cell_ox.style.padding = 0;
+                    cell_ox.innerHTML = '<input type="number" class="ox" name="filestbl_set-'+num+'-ox" value="0.0"  step="any" class="ox" id="id_filestbl_set-'+num+'-ox">';
+
+                    cell_oy.style.padding = 0;
+                    cell_oy.innerHTML = '<input type="number" class="oy" name="filestbl_set-'+num+'-oy" value="0.0"  step="any" class="oy" id="id_filestbl_set-'+num+'-oy">';
+
+                    cell_oz.style.padding = 0;
+                    cell_oz.innerHTML = '<input type="number" class="oz" name="filestbl_set-'+num+'-oz" value="0.0"  step="any" class="oz" id="id_filestbl_set-'+num+'-oz">';
+
+                    cell_ol.style.padding = 0;
+                    cell_ol.innerHTML = '<input type="number" class="ol" name="filestbl_set-'+num+'-ol" value="0.0"  step="any" class="ol" id="id_filestbl_set-'+num+'-ol">';
+
+                    cell_os.style.padding = 0;
+                    cell_os.innerHTML = '<input type="number" class="os" name="filestbl_set-'+num+'-os" value="0.0"  step="any" class="os" id="id_filestbl_set-'+num+'-os">';
+
+                    cell_absolute.style.padding = 0;
+                    cell_absolute.innerHTML = '<input type="number" class="absolute" name="filestbl_set-'+num+'-absolute" value="0.0"  step="any" class="absolute" id="id_filestbl_set-'+num+'-absolute">';
+
+                    test++;
+                    break;
+              }
+          }
+        }
+    }
+
+    function del_row(){
+          var mainTbl = document.getElementById("dynamic");
+            if (test+1 != mainTbl.rows.length){
+                mainTbl.deleteRow(test);
+                console.log(test);
+            }
+    }
+
+    function copy_row(){
+        let mainTbl = document.getElementById("dynamic");
+        var num = mainTbl.rows.length+1;
+        var v = document.getElementById("id_step_2_set-"+num+"-name");
+        if (v != null){
+            while (v != null){
+                num++;
+                v = document.getElementById("id_step_2_set-"+num+"-name");
+            }
+        }
+        let len = mainTbl.rows.length;
+        if (test!=0 && test+1!=len){
+            let row = mainTbl.insertRow(test+1);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+3].children;
+            for (i=0; i<listChildren.length; i++){
+                let parse = listChildren[i].children[0].id;
+                let key = "set-";
+                let firstPos = listChildren[i].children[0].id.indexOf(key);
+                let lastPos = listChildren[i].children[0].id.lastIndexOf('-');
+                first = listChildren[i].children[0].id.slice(0,firstPos+4);
+                last = listChildren[i].children[0].id.slice(lastPos,listChildren[i].children[0].id.length);
+                listChildren[i].children[0].id = first+num+last;
+                listChildren[i].children[0].name = first.slice(3,first.length)+num+last;
+            }
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                row.appendChild(box);
+            }
+            //mainTbl.deleteRow(test);
+            if (test!=len){
+                test++;
+            }
+        }
+    }
+
+    function up_row(){
+        let mainTbl = document.getElementById("dynamic");
+        let len = mainTbl.rows.length;
+        if (test!=0 && test!=1 && test+1!=len){
+            let row = mainTbl.insertRow(test-1);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+4].children;
+            //console.dir(listChildren);
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                row.appendChild(box);
+            }
+            mainTbl.deleteRow(test+1);
+            if (test!=1){
+                test--;
+            }
+        }
+    }
+
+    function down_row(){
+        let mainTbl = document.getElementById("dynamic");
+        let len = mainTbl.rows.length;
+        if (test!=0 && test+1!=len-1){
+            let row = mainTbl.insertRow(test+2);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+3].children;
+            //console.dir(listChildren);
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                row.appendChild(box);
+            }
+            mainTbl.deleteRow(test);
+            if (test!=len){
+                test++;
+            }
+        }
+    }
+
+    function go(){
+        let mainTbl = document.getElementById("dynamic");
+        let z1 = 0;
+        let y1 = 0;
+        let x1 = 0;
+        let yf = 0;
+        let xf = 0;
+        let z2 = 0;
+        let y2 = 0;
+        let x2 = 0;
+        let y2f = 0;
+        let x2f = 0;
+        let test = 0;
+        let test2 = 0;
+        let test3 = 0;
+        for(var i=1; i<mainTbl.rows.length; ++i){
+            if (i==1){
+                mainTbl.rows[i].children[4].children[0].value = 0;
+                mainTbl.rows[i].children[5].children[0].value = 0;
+                mainTbl.rows[i].children[9].children[0].value = 0;
+                mainTbl.rows[i].children[10].children[0].value = 0;
+                y1 = mainTbl.rows[i].children[2].children[0].value;
+                x1 = mainTbl.rows[i].children[1].children[0].value;
+                yf = mainTbl.rows[i].children[2].children[0].value;
+                xf = mainTbl.rows[i].children[1].children[0].value;
+                y2 = mainTbl.rows[i].children[10].children[0].value;
+                x2 = mainTbl.rows[i].children[9].children[0].value;
+                y2f = mainTbl.rows[i].children[10].children[0].value;
+                x2f = mainTbl.rows[i].children[9].children[0].value;
+
+                //Δx
+                mainTbl.rows[i].children[11].children[0].value = 0;
+                //Δy
+                mainTbl.rows[i].children[12].children[0].value = 0;
+                //Δz
+                mainTbl.rows[i].children[13].children[0].value = 0;
+                //ΔL
+                mainTbl.rows[i].children[14].children[0].value = 0;
+                //ΔS
+                mainTbl.rows[i].children[15].children[0].value = 0;
+                //AC
+                mainTbl.rows[i].children[16].children[0].value = 0;
+
+            }else{
+                s1 = mainTbl.rows[i].children[5].children[0].value;
+                l1 = mainTbl.rows[i].children[4].children[0].value;
+                z1 = mainTbl.rows[i].children[3].children[0].value;
+                y1 = mainTbl.rows[i].children[2].children[0].value;
+                x1 = mainTbl.rows[i].children[1].children[0].value;
+
+                s2 = mainTbl.rows[i].children[10].children[0].value;
+                l2 = mainTbl.rows[i].children[9].children[0].value;
+                z2 = mainTbl.rows[i].children[8].children[0].value;
+                y2 = mainTbl.rows[i].children[7].children[0].value;
+                x2 = mainTbl.rows[i].children[6].children[0].value;
+
+
+                if (mainTbl.rows[i].children[1].children[0].value != ''){
+                //L
+                mainTbl.rows[i].children[4].children[0].value = Math.sqrt((yf - mainTbl.rows[i].children[2].children[0].value)**2+(xf - mainTbl.rows[i].children[1].children[0].value)**2).toFixed(3);
+                //S
+                mainTbl.rows[i].children[5].children[0].value = Math.sqrt((mainTbl.rows[i-1].children[2].children[0].value - y1)**2+(mainTbl.rows[i-1].children[1].children[0].value - x1)**2).toFixed(3);
+                //L2
+                mainTbl.rows[i].children[9].children[0].value = Math.sqrt((y2f - mainTbl.rows[i].children[10].children[0].value)**2+(x2f - mainTbl.rows[i].children[9].children[0].value)**2).toFixed(3);
+                //S2
+                //console.log(mainTbl.rows[i-1].children[7].children[0].value);
+                mainTbl.rows[i].children[10].children[0].value = Math.sqrt((mainTbl.rows[i-1].children[7].children[0].value-y2)**2+(mainTbl.rows[i-1].children[6].children[0].value-x2)**2).toFixed(3);
+                //Δx
+                mainTbl.rows[i].children[11].children[0].value = ((x2-x1)*1000).toFixed(3);
+                //Δy
+                mainTbl.rows[i].children[12].children[0].value = ((y2-y1)*1000).toFixed(3);
+                //Δz
+                mainTbl.rows[i].children[13].children[0].value = ((z2-z1)*1000).toFixed(3);
+                //ΔL
+                test = ((l2-l1)*1000).toFixed(3);
+                test2 = ((mainTbl.rows[i].children[9].children[0].value - mainTbl.rows[i].children[4].children[0].value)*1000).toFixed(3);
+
+                //console.log(mainTbl.rows[i].children[9].children[0].value, '-', mainTbl.rows[i].children[4].children[0].value,'=',test2);
+
+                //console.log(l2,'-',l1,'=',test2);
+                mainTbl.rows[i].children[14].children[0].value = test2;
+                //ΔS
+                test3 = ((mainTbl.rows[i].children[10].children[0].value-mainTbl.rows[i].children[5].children[0].value)*1000).toFixed(3);
+                //console.log(s2,'-',s1,'=',(s2-s1)*1000).toFixed(3));
+                mainTbl.rows[i].children[15].children[0].value = test3;
+                //AC
+                mainTbl.rows[i].children[16].children[0].value = Math.sqrt(mainTbl.rows[i].children[13].children[0].value**2+test2**2).toFixed(3);
+
+                }
+            }
+        }
+    }
+
+</script>
+
+<style>
+
+table {
+    border-collapse: collapse;
+    border: 2px solid white;
+}
+
+td {
+    padding: 3px;
+    border: 1px solid ;
+    text-align: left;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: white;
+}
+thead{
+    background: white;
+}
+  table tr > *:nth-child(21) {
+    display: none;
+}
+
+  body{font: 12pt Arial;}
+
+tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+tbody td,
+tbody tr:before {
+  padding: .1em .5em;
+}
+
+tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+}
+
+a.disabled {
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;  /* устанавливаем курсор в виде стрелки */
+    color: #999; /* цвет текста для нективной ссылки */
+}
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+    }
+#tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+#tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+#tbody td,
+#tbody tr:before {
+  padding: .1em .5em;
+}
+
+#tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+  background-color: #DCDCDC;
+}
+.raz {
+  overflow: auto;  /* добавить полосу прокрутки */
+  height: 10em;
+  border: 1px solid red;
+}
+
+  #card{
+  overflow-y: scroll;
+  height: 73vh;
+  }
+
+</style>
+
+<form method="post">
+    {% csrf_token %}
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="color:grey;"><a href="{% url 'energy:tahe' %}" class="icon" style="color:grey;"><i class="fas fa-arrow-circle-left"style="padding: 3px;" ></i></a> Метод Тахеометрии №{{ file.pk }} от {{file.date}}
+            <button type="button" onclick="go()" class="btn btn-sm btn-secondary">Пересчитать</button>
+<!--            <button type="submit" name="correct" class="btn btn-sm btn-secondary">Сохранить</button>-->
+            <button type="submit" name="correct" class="btn btn-sm btn-secondary">Сохранить</button>
+        </h4>
+    </div>
+    <div class="col-md-4">
+        <label for="{{ file.file.id_for_label }}">Файл1:</label>
+        {{ file.file1 }}
+    </div>
+        <div class="col-md-4">
+        <label for="{{ file.file.id_for_label }}">Файл2:</label>
+        {{ file.file2 }}
+    </div>
+        <div class="col-md-4">
+
+        </div>
+        <br><br>
+
+    <div class="row" style="padding-left:25px;">
+        <button class="btn btn-outline-default" onclick = "add_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-plus"></i></button>
+        <button class="btn btn-outline-default" onclick = "copy_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-copy"></i></button>
+        <button class="btn btn-outline-default" onclick = "del_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-remove"></i></button>
+        <button class="btn btn-outline-default" onclick = "up_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-chevron-up"></i></button>
+        <button class="btn btn-outline-default" onclick="down_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-chevron-down"></i></button>
+    </div>
+<div class="col-sm-4 col-md-12">
+    <div class="card" id="card">
+        <div class="table-responsive" >
+                    <table id="dynamic" class="table table-striped" class="table table-hover">
+                        <thead class="sticky" style="padding:20px">
+                            <tr>
+                                <th class="sticky" style="padding: 0; width: 1%; text-align:center">#</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">точка</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">x</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">y</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">z</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">L</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">S</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">nw</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">x2</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">y2</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">z2</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">L2</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">S2</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">nw</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δx</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δy</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δz</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">ΔL</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">ΔS</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">АС</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">d</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {{ formset.management_form }}
+                            {% for form in formset %}
+                                {% if forloop.first %}
+                                {% endif %}
+                                <tr onClick='test = this.rowIndex; console.log("_"+test);'>
+                                    {% for field in form %}
+                                        <td style="padding:0;width:16%">{{ field }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+        </div>
+
+        {% comment %}
+              <div class="table-responsive" class="withScroll">
+                    <table class="table table-striped" class="table table-hover">
+                        <thead class="sticky" style="padding:20px;">
+                        <tr>
+                         <!--       <th style="padding: 1px;">Column 1</th>
+                                <th style="padding: 1px;">Column 2</th>-->
+                            <th class="sticky" style="padding: 0; width: 1%; text-align:center">#</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">точка</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">x</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">y</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">z</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">L</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">S</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">x</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">y</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">z</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">L</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">S</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δx</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δy</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δz</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">ΔL</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">ΔS</th>
+                            <th class="sticky" style="padding: 0; width: 6%; text-align:center">АС</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dynamic">
+                        {% for doc in files %}
+                        <tr>
+                               <!-- <td style="padding: 0;">Cell 1</td>
+                                <td style="padding: 0;">Cell 2</td>-->
+
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.name }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.x }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.y }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.z }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.s }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.l }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.x2 }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.y2 }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.z2 }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.s2 }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.l2 }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.ox }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.oy }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.oz }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.ol }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.os }}
+                                </td>
+                                <td style="padding: 0; padding-left:8px; padding-right:6px; text-align: right" scope="row">
+                                    {{ doc.absolute }}
+                                </td>
+
+
+                        </tr>
+                                        {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+        {% endcomment %}
+
+    </div></div>
+
+</div>
+</form>
+{% endblock %}
+
+
+
+

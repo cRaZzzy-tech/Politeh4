@@ -1,0 +1,448 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Изменение заявки{% endblock %}
+
+{% block content %}
+
+<script src="{% static '/assets/js/jquery-3.3.1.min.js' %}"></script>
+<script>
+
+    $(document).ready(function(){
+        var mainTbl = document.getElementById("dynamic");
+        for(var i=1; i<mainTbl.rows.length; ++i){
+            if (mainTbl.rows[i].children[6].children[0].checked){
+                mainTbl.rows[i].children[0].children[0].style.color = 'red';
+            }
+        }
+    });
+
+    function add_row(){
+        var mainTbl = document.getElementById("dynamic");
+        var row = mainTbl.insertRow(test+1);
+        row.setAttribute("onclick","test = this.rowIndex");
+        var cells = mainTbl.rows[0].cells.length;
+      for(i=0; i<cells; i++){
+              switch(i){
+            case 0:
+                var num = mainTbl.rows.length+1;
+                var v = document.getElementById("id_saletesttable_set-"+num+"-name");
+                if (v != null){
+                    while (v != null){
+                        num++;
+                        v = document.getElementById("id_saletesttable_set-"+num+"-name");
+                    }
+                }
+                var cell_L = row.insertCell(i);
+                var cell_S = row.insertCell(i);
+                var cell_z = row.insertCell(i);
+                var cell_y = row.insertCell(i);
+                var cell_x = row.insertCell(i);
+                var cell_name = row.insertCell(i);
+
+                cell_name.style.padding = 0;
+                cell_name.innerHTML = '<input type="text" class="name" name="filestbl_set-'+num+'-name" value="" class="name" id="id_filestbl_set-'+num+'-name">';
+
+                cell_x.style.padding = 0;
+                cell_x.innerHTML = '<input type="number" class="x" name="filestbl_set-'+num+'-x" value="0.0"  step="any" class="x" id="id_filestbl_set-'+num+'-x">';
+                //console.dir(cell_x);
+
+                cell_y.style.padding = 0;
+                cell_y.innerHTML = '<input type="number" class="y" name="filestbl_set-'+num+'-y" value="0.0"  step="any" class="y" id="id_filestbl_set-'+num+'-y">';
+
+                cell_z.style.padding = 0;
+                cell_z.innerHTML = '<input type="number" class="z" name="filestbl_set-'+num+'-z" value="0.0"  step="any" class="z" id="id_filestbl_set-'+num+'-z">';
+
+                cell_S.style.padding = 0;
+                cell_S.innerHTML = '<input type="number" class="S" name="filestbl_set-'+num+'-s" value="0.0"  step="any" class="s" id="id_filestbl_set-'+num+'-s">';
+
+                cell_L.style.padding = 0;
+                cell_L.innerHTML = '<input type="number" class="L" name="filestbl_set-'+num+'-l" value="0.0"  step="any" class="l" id="id_filestbl_set-'+num+'-l">';
+
+                test++;
+                break;
+          }
+      }
+    }
+
+    function copy_row(){
+        var mainTbl = document.getElementById("dynamic");
+        var row = mainTbl.insertRow(test+1);
+        row.setAttribute("onclick","test = this.rowIndex");
+        //test ++;
+        var cells = mainTbl.rows[0].cells.length;
+        //alert(test);
+        for(i=0; i<cells; i++){
+              switch(i){
+                case 0:
+                var cell_L = row.insertCell(i);
+                var cell_S = row.insertCell(i);
+                var cell_z = row.insertCell(i);
+                var cell_y = row.insertCell(i);
+                var cell_x = row.insertCell(i);
+                var cell_name = row.insertCell(i);
+
+                var num = mainTbl.rows.length+1;
+                var v = document.getElementById("id_filestbl_set-"+num+"-name");
+                if (v != null){
+                    while (v != null){
+                        num++;
+                        v = document.getElementById("id_filestbl_set-"+num+"-name");
+                    }
+                }
+
+                cell_name.style.padding = 0;
+                cell_name.innerHTML = '<input type="text" class="name" name="filestbl_set-'+num+'-name" value="" class="name" id="id_filestbl_set-'+num+'-name">';
+
+                cell_x.style.padding = 0;
+                cell_x.innerHTML = '<input type="number" class="x" name="filestbl_set-'+num+'-x" value="0.0"  step="any" class="x" id="id_filestbl_set-'+num+'-x">';
+
+                cell_y.style.padding = 0;
+                cell_y.innerHTML = '<input type="number" class="y" name="filestbl_set-'+num+'-y" value="0.0"  step="any" class="y" id="id_filestbl_set-'+num+'-y">';
+
+                cell_z.style.padding = 0;
+                cell_z.innerHTML = '<input type="number" class="z" name="filestbl_set-'+num+'-z" value="0.0"  step="any" class="z" id="id_filestbl_set-'+num+'-z">';
+
+                cell_S.style.padding = 0;
+                cell_S.innerHTML = '<input type="number" class="S" name="filestbl_set-'+num+'-s" value="0.0"  step="any" class="s" id="id_filestbl_set-'+num+'-s">';
+
+                cell_L.style.padding = 0;
+                cell_L.innerHTML = '<input type="number" class="L" name="filestbl_set-'+num+'-l" value="0.0"  step="any" class="l" id="id_filestbl_set-'+num+'-l">';
+
+                document.getElementById("id_filestbl_set-"+num+"-name").value = mainTbl.rows[test].cells[0].childNodes[0].value;
+                document.getElementById("id_filestbl_set-"+num+"-x").value = Number(mainTbl.rows[test].cells[1].childNodes[0].value);
+                document.getElementById("id_filestbl_set-"+num+"-y").value = mainTbl.rows[test].cells[2].childNodes[0].value;
+                document.getElementById("id_filestbl_set-"+num+"-z").value = mainTbl.rows[test].cells[3].childNodes[0].value;
+                document.getElementById("id_filestbl_set-"+num+"-s").value = mainTbl.rows[test].cells[4].childNodes[0].value;
+                document.getElementById("id_filestbl_set-"+num+"-l").value = mainTbl.rows[test].cells[5].childNodes[0].value;
+
+                test++;
+                //console.log(test+", num: "+num);
+
+                break;
+          }
+       }
+    }
+
+    function del_row(){
+          var mainTbl = document.getElementById("dynamic");
+            if (test+1 != mainTbl.rows.length){
+                mainTbl.deleteRow(test);
+                //if (test!=0 && test!=1)
+                //    test;
+                console.log(test);
+            }
+    }
+
+    function up_row(){
+        let mainTbl = document.getElementById("dynamic");
+        let len = mainTbl.rows.length;
+        if (test!=0 && test!=1 && test+1!=len){
+            let row = mainTbl.insertRow(test-1);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+4].children;
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                row.appendChild(box);
+            }
+            mainTbl.deleteRow(test+1);
+            if (test!=1){
+                test--;
+            }
+        }
+    }
+
+    function down_row(){
+        let mainTbl = document.getElementById("dynamic");
+            let len = mainTbl.rows.length;
+            //console.log(test+"__"+len);
+            //console.log(test, len);
+           if (test!=0 && test+1!=len){
+                let row = mainTbl.insertRow(test+2);
+                //let p = mainTbl.rows[2];
+                //let p_prime = p.cloneNode(true);
+
+                row.setAttribute("onclick","test = this.rowIndex");
+                let cells = mainTbl.rows[0].cells.length;
+                for(i=0; i<cells; i++){
+                    switch(i){
+                        case 0:
+                            let cell_L = row.insertCell(i);
+                            let cell_S = row.insertCell(i);
+                            let cell_z = row.insertCell(i);
+                            let cell_y = row.insertCell(i);
+                            let cell_x = row.insertCell(i);
+                            let cell_name = row.insertCell(i);
+
+                            let num = mainTbl.rows.length+1;
+                            let v = document.getElementById("id_filestbl_set-"+num+"-name");
+                            if (v != null){
+                                while (v != null){
+                                    num++;
+                                    v = document.getElementById("id_filestbl_set-"+num+"-name");
+                                }
+                            }
+
+                            cell_name.style.padding = 0;
+                            cell_name.innerHTML = '<input type="text" class="name" name="filestbl_set-'+num+'-name" value="" class="name" id="id_filestbl_set-'+num+'-name">';
+
+                            cell_x.style.padding = 0;
+                            cell_x.innerHTML = '<input type="number" class="x" name="filestbl_set-'+num+'-x" value="0.0"  step="any" class="x" id="id_filestbl_set-'+num+'-x">';
+                            //console.dir(cell_x);
+
+                            cell_y.style.padding = 0;
+                            cell_y.innerHTML = '<input type="number" class="y" name="filestbl_set-'+num+'-y" value="0.0"  step="any" class="y" id="id_filestbl_set-'+num+'-y">';
+
+                            cell_z.style.padding = 0;
+                            cell_z.innerHTML = '<input type="number" class="z" name="filestbl_set-'+num+'-z" value="0.0"  step="any" class="z" id="id_filestbl_set-'+num+'-z">';
+
+                            cell_S.style.padding = 0;
+                            cell_S.innerHTML = '<input type="number" class="S" name="filestbl_set-'+num+'-s" value="0.0"  step="any" class="s" id="id_filestbl_set-'+num+'-s">';
+
+                            cell_L.style.padding = 0;
+                            cell_L.innerHTML = '<input type="number" class="L" name="filestbl_set-'+num+'-l" value="0.0"  step="any" class="l" id="id_filestbl_set-'+num+'-l">';
+
+                            document.getElementById("id_filestbl_set-"+num+"-name").value = mainTbl.rows[test].cells[0].childNodes[0].value;
+                            document.getElementById("id_filestbl_set-"+num+"-x").value = mainTbl.rows[test].cells[1].childNodes[0].value;
+                            document.getElementById("id_filestbl_set-"+num+"-y").value = mainTbl.rows[test].cells[2].childNodes[0].value;
+                            document.getElementById("id_filestbl_set-"+num+"-z").value = mainTbl.rows[test].cells[3].childNodes[0].value;
+                            document.getElementById("id_filestbl_set-"+num+"-s").value = mainTbl.rows[test].cells[4].childNodes[0].value;
+                            document.getElementById("id_filestbl_set-"+num+"-l").value = mainTbl.rows[test].cells[5].childNodes[0].value;
+                            console.log(mainTbl[test]);
+                            mainTbl.deleteRow(test);
+                            if (test!=len-1){
+                                test++;
+                            }
+                            console.log(test);
+                            break;
+                    }
+                }
+           }
+        }
+
+    function go(){
+        let new_line = false;
+        let mainTbl = document.getElementById("dynamic");
+        let y1 = 0;
+        let x1 = 0;
+        let yf = 0;
+        let xf = 0;
+        for(var i=1; i<mainTbl.rows.length; ++i){
+            console.log(mainTbl.rows[i].children[0].children[0].value);
+            if (i==1){
+                mainTbl.rows[i].children[4].children[0].value = 0;
+                mainTbl.rows[i].children[5].children[0].value = 0;
+                y1 = mainTbl.rows[i].children[2].children[0].value;
+                x1 = mainTbl.rows[i].children[1].children[0].value;
+                yf = mainTbl.rows[i].children[2].children[0].value;
+                xf = mainTbl.rows[i].children[1].children[0].value;
+                new_line = false;
+                //console.dir(mainTbl.rows[i].children[0].children[0].value);
+            }else{
+                if (mainTbl.rows[i].children[0].children[0].style.color == 'red'){
+                    new_line = true;
+                }
+                if (new_line == true){
+                    mainTbl.rows[i].children[0].children[0].value += 'newline';
+                    mainTbl.rows[i].children[4].children[0].value = 0;
+                    mainTbl.rows[i].children[5].children[0].value = 0;
+                    y1 = mainTbl.rows[i].children[2].children[0].value;
+                    x1 = mainTbl.rows[i].children[1].children[0].value;
+                    yf = mainTbl.rows[i].children[2].children[0].value;
+                    xf = mainTbl.rows[i].children[1].children[0].value;
+                    new_line = false;
+                }
+                if (mainTbl.rows[i].children[0].children[0].value==''){
+                    new_line = true;
+                    //continue;
+                }
+                if (mainTbl.rows[i].children[1].children[0].value != ''){
+                //L
+                mainTbl.rows[i].children[4].children[0].value = Math.sqrt((yf - mainTbl.rows[i].children[2].children[0].value)**2+(xf - mainTbl.rows[i].children[1].children[0].value)**2).toFixed(3);
+                //S
+                mainTbl.rows[i].children[5].children[0].value = Math.sqrt((y1 - mainTbl.rows[i].children[2].children[0].value)**2+(x1 - mainTbl.rows[i].children[1].children[0].value)**2).toFixed(3);
+                }
+                y1 = mainTbl.rows[i].children[2].children[0].value;
+                x1 = mainTbl.rows[i].children[1].children[0].value;
+            }
+        }
+    }
+
+</script>
+
+<style>
+
+#dynamic tr > *:nth-child(8) {
+    display: none;
+}
+#dynamic tr > *:nth-child(9) {
+    display: none;
+}
+#dynamic tr > *:nth-child(10) {
+    display: none;
+}
+table {
+    border-collapse: collapse;
+    border: 2px solid white;
+}
+#dynamic tr > *:nth-child(7) {
+    display: none;
+}
+
+td {
+    padding: 3px;
+    border: 1px solid ;
+    text-align: left;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: white;
+}
+thead{
+    background: white;
+}
+  table tr > *:nth-child(14) {
+    display: none;
+}
+
+  body{font: 12pt Arial;}
+
+
+tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+tbody td,
+tbody tr:before {
+  padding: .1em .5em;
+}
+
+tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+}
+
+a.disabled {
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;  /* устанавливаем курсор в виде стрелки */
+    color: #999; /* цвет текста для нективной ссылки */
+}
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+    }
+#tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+#tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+#tbody td,
+#tbody tr:before {
+  padding: .1em .5em;
+}
+
+#tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+  background-color: #DCDCDC;
+}
+.raz {
+  overflow: auto;  /* добавить полосу прокрутки */
+  height: 10em;
+  border: 1px solid red;
+}
+
+  #card{
+  overflow-y: scroll;
+  height: 74.5vh;
+  }
+    input#checkbox{
+    color:red;
+    visibility: hidden;
+    }
+</style>
+
+<form method="post">
+    {% csrf_token %}
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="color:grey;"><a href="{% url 'energy:load_files' %}" class="icon" style="color:grey;"><i class="fas fa-arrow-circle-left"style="padding: 3px;" ></i></a> Файл №{{ file.pk }} от {{file.date}}
+            <button type="submit" name="correct" onclick="go()" class="btn btn-sm btn-secondary">Пересчитать и сохранить</button>
+        </h4>
+    </div>
+
+        <div class="col-md-3">
+            <label for="{{ file.place.id_for_label }}">Место:</label>
+            {{ file.place }}
+        </div>
+        <div class="col-md-4">
+            <label for="{{ file.file.id_for_label }}">Файл:</label>
+            {{ file.file }}
+        </div>
+        <div class="col-md-5">
+            <label for="{{ file.comment.id_for_label }}">Комментарий:</label>
+            {{ file.comment }}
+        </div>
+
+    <div class="row" style="padding-left:25px;">
+        <button class="btn btn-outline-default" onclick = "add_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-plus"></i></button>
+        <button class="btn btn-outline-default" onclick = "copy_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-copy"></i></button>
+        <button class="btn btn-outline-default" onclick = "del_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-remove"></i></button>
+        <button class="btn btn-outline-default" onclick = "up_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-chevron-up"></i></button>
+        <button class="btn btn-outline-default" onclick="down_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-chevron-down"></i></button>
+    </div>
+<div class="col-sm-4 col-md-12">
+    <div class="card" id="card">
+                <div class="table-responsive" >
+                    <table id="dynamic" class="table table-striped" class="table table-hover">
+                        <thead class="sticky" style="padding:20px">
+                        <tr onClick='test = this.rowIndex; console.log("_"+test);'>
+                         <!--       <th style="padding: 1px;">Column 1</th>
+                                <th style="padding: 1px;">Column 2</th>-->
+                                <th class="sticky" style="padding: 0; width: 1%; text-align:center">#</th>
+                                <th class="sticky" style="padding: 0; text-align:center">Name</th>
+                                <th class="sticky" style="padding: 0; text-align:center">x</th>
+                                <th class="sticky" style="padding: 0; text-align:center">y</th>
+                                <th class="sticky" style="padding: 0; text-align:center">z</th>
+                                <th class="sticky" style="padding: 0; text-align:center">L</th>
+                                <th class="sticky" style="padding: 0; text-align:center">L</th>
+                            <th></th><th></th><th></th>
+                                <th class="sticky" style="padding: 0; text-align:center">S</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {{ formset.management_form }}
+                            {% for form in formset %}
+                                {% if forloop.first %}
+                                {% endif %}
+                                <tr onClick='test = this.rowIndex;'>
+                                    {% for field in form %}
+                                        <td style="padding:0;width:16%">{{ field }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}
+
+
+
+

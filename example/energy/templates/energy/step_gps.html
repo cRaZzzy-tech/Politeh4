@@ -1,0 +1,206 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Изменение заявки{% endblock %}
+
+{% block content %}
+
+<script src="{% static '/assets/js/jquery-3.3.1.min.js' %}"></script>
+<script>
+function step2(){
+    let first = document.getElementById('pk').textContent;
+    let second = document.getElementById('id_doc2').value;
+    let url = $("#personForm").attr("gps");
+    let comment = document.getElementById('id_comment').value;
+
+    console.dir(second);
+
+    $.ajax({
+    url: url,
+        data: {
+                    'first':first,
+                    'second': second,
+                    'comment': comment
+                },
+                    success: function (data) {
+                    $("#dynamic").html(data);
+                }
+              });}
+
+</script>
+
+<style>
+
+table {
+    overflow-x:scroll;
+    border-collapse: collapse;
+    border: 2px solid white;
+}
+
+td {
+    padding: 3px;
+    border: 1px solid ;
+    text-align: left;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: white;
+}
+thead{
+    background: white;
+}
+  table tr > *:nth-child(14) {
+    display: none;
+}
+
+  body{font: 12pt Arial;}
+
+
+tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+tbody td,
+tbody tr:before {
+  padding: .1em .5em;
+}
+
+tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+}
+
+a.disabled {
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;  /* устанавливаем курсор в виде стрелки */
+    color: #999; /* цвет текста для нективной ссылки */
+}
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+    }
+#tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+#tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+#tbody td,
+#tbody tr:before {
+  padding: .1em .5em;
+}
+
+#tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+  background-color: #DCDCDC;
+}
+.raz {
+  overflow: auto;  /* добавить полосу прокрутки */
+  height: 10em;
+  border: 1px solid red;
+}
+
+  #card{
+  overflow-y: scroll;
+  height: 70.5vh;
+  }
+
+
+
+</style>
+
+    <div method="post" id="personForm" gps="{% url 'energy:ajax_gps' %}" novalidate></div>
+    <div id="pk" hidden="True">{{ bb.pk }}</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="color:grey;"><a href="{% url 'energy:load_files' %}" class="icon" style="color:grey;"><i class="fas fa-arrow-circle-left"style="padding: 3px;" ></i></a> Шаг 2 - выбор файла для сравнения</a></h4>
+    </div>
+<br><br><br>
+        <div class="col-md-4">
+            <label for="{{ file.place.id_for_label }}">Файл1:</label>
+            {{ bb.place }}
+            <label for="{{ file.file.id_for_label }}">от</label>
+            {{ bb.date }}
+        </div>
+    <div class="col-md-5" style="text-align:right">
+        Файл2:
+        <select name="place" required="" id="id_doc2">
+            <option value="">---------</option>
+            {% for doc in docs %}
+                <option value="{{ doc.pk }}">{{ doc.place }} от {{ doc.date }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3" style="text-align:top">
+        <button type="submit" name="exit" onclick="step2()" class="btn btn-secondary btn-sm">Посчитать и записать</button>
+    </div>
+        <br><br>
+
+<div class="col-sm-4 col-md-12">
+    <div class="card" id="card">
+                <div class="table-responsive" class="withScroll">
+                    <table class="table table-striped" class="table table-hover">
+                        <thead class="sticky" style="padding:20px">
+                            <tr>
+                                <th class="sticky" style="padding: 0; width: 1%; text-align:center">#</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">Точка1</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">x</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">y</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">z</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">Точка2</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">x</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">y</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">z</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δx</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δy</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">Δz</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">АС</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">V</th>
+                                <th class="sticky" style="padding: 0; width: 6%; text-align:center">V</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dynamic">
+                            {% comment %}
+                            {% for doc in fileTbl %}
+                            <tr>
+                                    <td style="padding: 0; padding-right:10px; text-align: right" scope="row">
+                                        {{ doc.name }}
+                                    </td>
+                                    <td style="padding: 0; padding-right:10px; text-align: right" scope="row">
+                                        {{ doc.x }}
+                                    </td>
+                                    <td style="padding: 0; padding-right:10px; text-align: right" scope="row">
+                                        {{ doc.y }}
+                                    </td>
+                                    <td style="padding: 0; padding-right:10px; text-align: right" scope="row">
+                                        {{ doc.z }}
+                                    </td>
+                            </tr>
+                            {% endfor %}
+                            {% endcomment %}
+                        </tbody>
+                    </table>
+                </div>
+    </div>
+<div class='col-md-12' style="padding:10px">
+    <p><label style="color:grey" for="id_comment">Комментарий:</label> <input style="width:90%" type="text" name="comment" value=" " maxlength="500" required="" id="id_comment"></p>
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+
+

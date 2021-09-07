@@ -1,0 +1,19 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+
+{% block title %}Изменение заявки{% endblock %}
+
+{% block content %}
+<form>
+    <div id="pills-with-icons">
+        <ul class="nav nav-pills nav-pills-icons nav-pills-success" role="tablist">
+            <li class="nav-item"><a class="nav-link active" href="#home-1" role="tab" data-toggle="tab"><i class="material-icons">home</i>Home</a></li>
+            <li class="nav-item"><a class="submit" type="submit" onclick="alert();" href="{% url 'energy:load_files_new' %}" role="tab" data-toggle="tab"><i class="fa fa-download"></i>Load</a></li>
+            <li class="nav-item"><a class="nav-link" href="#portfolio-1" role="tab" data-toggle="tab"><i class="fa fa-edit"></i>Step1</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact-1" role="tab" data-toggle="tab"><i class="fa fa-edit"></i>Step2</a></li>
+        </ul>
+    </div>
+</form>
+
+{% endblock %}

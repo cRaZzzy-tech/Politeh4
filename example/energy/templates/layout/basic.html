@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap4 %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>KTU</title>
+    <link rel="stylesheet" href="{% static '/assets/bootstrap/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{% static '/assets/fonts/fontawesome-all.min.css' %}"/>
+    <link rel="stylesheet" href="{% static '/assets/fonts/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static '/assets/fonts/fontawesome5-overrides.min.css' %}"/>
+    <link rel="stylesheet" href="{% static '/assets/css/Model-Card-Style-1.css' %}"/>
+    <link rel="stylesheet" href="{% static '/assets/css/Material-Pill-Icons.css' %}"/>
+    <link rel="stylesheet" href="{% static '/assets/fonts/material-icons.min.css' %}"/>
+
+    <style>
+        .card-body{
+            height: 89.5vh;
+        }
+    </style>
+
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: linear-gradient(80deg, rgb(68,102,146), rgb(13,47,91)), rgb(68,102,146);">
+            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-mountain"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>Карту</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    {% comment %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'energy:home' %}"><i class="fa fa-map-o"></i><span>Главная</span></a></li>
+                    {% endcomment %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'energy:load_files' %}"><i class="fa fa-download"></i><span>Загрузка Тахеометрии</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'energy:tahe' %}"><i class="fa fa-edit"></i><span>Метод тахеометрии</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'energy:load_gps' %}"><i class="fa fa-download"></i><span>Загрузка GPS</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'energy:gps' %}"><i class="fa fa-edit"></i><span>Метод GPS</span></a></li>
+                    <li class="nav-item"></li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content" style="background: #0e305c;padding: 27px;">
+                <div class="card" style="padding: 0;">
+                    <div class="card-body">
+                        {% block content %}
+
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <footer class="sticky-footer" style="padding: 8px; background-color:#224470;">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © ТОО Status Karaganda 2021</span></div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="{% static '/assets/js/jquery.min.js' %}"></script>
+    <script src="{% static '/assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="{% static '/assets/js/theme.js' %}"></script>
+    <script src="{% static '/assets/js/Material-Pill-Icons.js' %}"></script>
+</body>
+
+</html>
+

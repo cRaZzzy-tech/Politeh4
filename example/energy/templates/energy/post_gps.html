@@ -1,0 +1,105 @@
+<!-- templates/post.html -->
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Изменение заявки{% endblock %}
+
+{% block content %}
+
+<script src="{% static '/assets/js/jquery-3.3.1.min.js' %}"></script>
+<script>
+
+    function go(){
+
+        f = document.getElementById('id_comment');
+        if (f.textContent==' '){
+            //alert('12345');
+            f.textContent = 'Комментарий отсутствует';
+        }
+    }
+
+</script>
+
+<style>
+p{
+  padding-left:20px;
+}
+
+a.disabled {
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;  /* устанавливаем курсор в виде стрелки */
+    color: #999; /* цвет текста для нективной ссылки */
+}
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+    }
+#tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+#tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+#tbody td,
+#tbody tr:before {
+  padding: .1em .5em;
+}
+
+#tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+  background-color: #DCDCDC;
+}
+.raz {
+  overflow: auto;  /* добавить полосу прокрутки */
+  height: 10em;
+  border: 1px solid red;
+}
+
+  #card{
+  overflow-y: scroll;
+  height: 80.5vh;
+  }
+  label,input{
+  color:black
+  }
+  #id_comment{
+    height:10vh;
+    width:100%;
+  }
+</style>
+
+<form method="post" enctype="multipart/form-data">
+<div class="row">
+    <div class="col-md-5">
+        <h4 style="color:grey;"><a href="{% url 'energy:load_gps' %}" class="icon" style="color:grey;"><i class="fas fa-arrow-circle-left"style="padding: 3px;" ></i></a> Загрузка файла <button type="submit" onclick="go()" class="btn btn-sm btn-secondary">Загрузить</button></h4>
+    </div>
+    <div class="col-md-7">
+        <h4 id="icons" style="text-align:right">
+            <!--
+            <a class="icon" style="color:grey;" data-toggle="modal" data-target="#exampleModal" href="#exampleModal"  role="button"><i class="fa fa-download"style="padding: 3px;"></i></a>-->
+            <!--
+            <a class="icon" style="color:grey;"  role="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-download"style="padding: 3px;"></i></a>
+            -->
+        </h4>
+    </div>
+
+
+    <div class="col-sm-4 col-md-12">
+        <div class="card" id="card">
+
+        <br>
+          {% csrf_token %}
+          {{ form.as_p }}
+        </div>
+    </div>
+
+</div>
+</form>
+
+{% endblock %}

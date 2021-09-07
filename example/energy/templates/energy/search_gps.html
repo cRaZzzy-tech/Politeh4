@@ -1,0 +1,367 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Изменение заявки{% endblock %}
+
+{% block content %}
+
+<script src="{% static '/assets/js/jquery-3.3.1.min.js' %}"></script>
+<script>
+
+    $(document).ready(function(){
+        var mainTbl = document.getElementById("dynamic");
+        for(var i=1; i<mainTbl.rows.length; ++i){
+            if (mainTbl.rows[i].children[4].children[0].checked){
+                mainTbl.rows[i].children[0].children[0].style.color = 'red';
+                //console.log('eeeeeeeeee');
+            }
+        }
+    });
+
+    function add_row(){
+        let mainTbl = document.getElementById("dynamic");
+        var num = mainTbl.rows.length+1;
+        var v = document.getElementById("id_gps_set-"+num+"-name");
+        if (v != null){
+            while (v != null){
+                num++;
+                v = document.getElementById("id_gps_set-"+num+"-name");
+                console.dir(v);
+            }
+        }
+        let len = mainTbl.rows.length;
+        if (test!=0 && test+1!=len){
+            let row = mainTbl.insertRow(test+1);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+3].children;
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                let parse = box.children[0].id;
+                let key = "set-";
+                let firstPos = box.children[0].id.indexOf(key);
+                let lastPos = box.children[0].id.lastIndexOf('-');
+                first = box.children[0].id.slice(0,firstPos+4);
+                last = box.children[0].id.slice(lastPos,listChildren[i].children[0].id.length);
+                box.children[0].id = first+num+last;
+                box.children[0].name = first.slice(3,first.length)+num+last;
+                box.children[0].value = '';
+                row.appendChild(box);
+            }
+            if (test!=len){
+                test++;
+            }
+        }
+    }
+
+    function copy_row(){
+        let mainTbl = document.getElementById("dynamic");
+        var num = mainTbl.rows.length+1;
+        var v = document.getElementById("id_gps_set-"+num+"-name");
+        if (v != null){
+            while (v != null){
+                num++;
+                v = document.getElementById("id_gps_set-"+num+"-name");
+                console.dir(v);
+            }
+        }
+        let len = mainTbl.rows.length;
+        if (test!=0 && test+1!=len){
+            let row = mainTbl.insertRow(test+1);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+3].children;
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                let parse = box.children[0].id;
+                let key = "set-";
+                let firstPos = box.children[0].id.indexOf(key);
+                let lastPos = box.children[0].id.lastIndexOf('-');
+                first = box.children[0].id.slice(0,firstPos+4);
+                last = box.children[0].id.slice(lastPos,listChildren[i].children[0].id.length);
+                box.children[0].id = first+num+last;
+                box.children[0].name = first.slice(3,first.length)+num+last;
+                row.appendChild(box);
+            }
+            //mainTbl.deleteRow(test);
+            if (test!=len){
+                test++;
+            }
+        }
+    }
+
+/*
+    function copy_row(){
+        let mainTbl = document.getElementById("dynamic");
+        var num = mainTbl.rows.length+1;
+        var v = document.getElementById("id_gps_set-"+num+"-name");
+        if (v != null){
+            while (v != null){
+                num++;
+                v = document.getElementById("id_gps_set-"+num+"-name");
+                console.dir(v);
+            }
+        }
+        let len = mainTbl.rows.length;
+        if (test!=0 && test+1!=len){
+            let row = mainTbl.insertRow(test+1);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+3].children;
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                let parse = box.children[0].id;
+                let key = "set-";
+                let firstPos = box.children[0].id.indexOf(key);
+                let lastPos = box.children[0].id.lastIndexOf('-');
+                first = box.children[0].id.slice(0,firstPos+4);
+                last = box.children[0].id.slice(lastPos,listChildren[i].children[0].id.length);
+                box.children[0].id = first+num+last;
+                box.children[0].name = first.slice(3,first.length)+num+last;
+                row.appendChild(box);
+            }
+            //mainTbl.deleteRow(test);
+            if (test!=len){
+                test++;
+            }
+        }
+    }
+*/
+
+    function del_row(){
+          var mainTbl = document.getElementById("dynamic");
+            if (test+1 != mainTbl.rows.length){
+                mainTbl.deleteRow(test);
+                //if (test!=0 && test!=1)
+                //    test;
+                console.log(test);
+            }
+    }
+
+    function up_row(){
+        let mainTbl = document.getElementById("dynamic");
+        let len = mainTbl.rows.length;
+        if (test!=0 && test!=1 && test+1!=len){
+            let row = mainTbl.insertRow(test-1);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+4].children;
+            //console.dir(listChildren);
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                row.appendChild(box);
+            }
+            mainTbl.deleteRow(test+1);
+            if (test!=1){
+                test--;
+            }
+        }
+    }
+
+    function down_row(){
+        let mainTbl = document.getElementById("dynamic");
+        let len = mainTbl.rows.length;
+        if (test!=0 && test+1!=len-1){
+            let row = mainTbl.insertRow(test+2);
+            row.setAttribute("onclick","test = this.rowIndex");
+            let listChildren = mainTbl.children[1].children[test+3].children;
+            //console.dir(listChildren);
+            for(i=0; i<listChildren.length; i++){
+                let box = listChildren[i].cloneNode(true);
+                row.appendChild(box);
+            }
+            mainTbl.deleteRow(test);
+            if (test!=len){
+                test++;
+            }
+        }
+    }
+
+    function go(){
+        let new_line = false;
+        let mainTbl = document.getElementById("dynamic");
+        for(var i=1; i<mainTbl.rows.length; ++i){
+            console.log(mainTbl.rows[i].children[0].children[0].value);
+            if (i==1){
+                new_line = false;
+            }else{
+                if (mainTbl.rows[i].children[0].children[0].style.color == 'red'){
+                    new_line = true;
+                }
+                if (new_line == true){
+                    mainTbl.rows[i].children[0].children[0].value += 'newline';
+                    new_line = false;
+                }
+                if (mainTbl.rows[i].children[0].children[0].value==''){
+                    new_line = true;
+                }
+            }
+        }
+    }
+
+</script>
+
+<style>
+table {
+    border-collapse: collapse;
+    border: 2px solid white;
+}
+
+td {
+    padding: 3px;
+    border: 1px solid ;
+    text-align: left;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: white;
+}
+thead{
+    background: white;
+}
+
+
+  body{font: 12pt Arial;}
+
+
+tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+tbody td,
+tbody tr:before {
+  padding: .1em .5em;
+}
+
+tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+}
+
+a.disabled {
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;  /* устанавливаем курсор в виде стрелки */
+    color: #999; /* цвет текста для нективной ссылки */
+}
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: white;
+    }
+#tbody {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+#tbody tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+#tbody td,
+#tbody tr:before {
+  padding: .1em .5em;
+}
+
+#tbody tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+  background-color: #DCDCDC;
+}
+.raz {
+  overflow: auto;  /* добавить полосу прокрутки */
+  height: 10em;
+  border: 1px solid red;
+}
+
+  #card{
+  overflow-y: scroll;
+  height: 73.5vh;
+  }
+    input#checkbox{
+    color:red;
+    visibility: hidden;
+    }
+tbody tr > *:nth-child(14) {
+    display: none;
+}
+
+
+</style>
+
+<form method="post">
+    {% csrf_token %}
+<div class="row">
+    <div class="col-md-12">
+        <h4 style="color:grey;"><a href="{% url 'energy:gps' %}" class="icon" style="color:grey;"><i class="fas fa-arrow-circle-left"style="padding: 3px;" ></i></a> Файл №{{ file.pk }} от {{file.date}}
+            <button type="submit" onclick="go()" name="apply" class="btn btn-sm btn-secondary">Cохранить</button></h4>
+    </div>
+        <div class="col-md-4">
+            <label for="{{ file.date.id_for_label }}">Дата:</label>
+            {{ file.date }}
+        </div>
+        <div class="col-md-3">
+            <label for="{{ file.file1.id_for_label }}">Файл:</label>
+            {{ file.file1 }}
+        </div>
+    <div class="col-md-5">
+             <label for="{{ file.file2.id_for_label }}">Файл:</label>
+            {{ file.file2 }}
+        </div>
+
+    <div class="row" style="padding-left:25px;">
+        <button class="btn btn-outline-default" onclick = "add_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-plus"></i></button>
+        <button class="btn btn-outline-default" onclick = "copy_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-copy"></i></button>
+        <button class="btn btn-outline-default" onclick = "del_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-remove"></i></button>
+        <button class="btn btn-outline-default" onclick = "up_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-chevron-up"></i></button>
+        <button class="btn btn-outline-default" onclick="down_row()" type="button" style="padding: 0;border-radius: 4px;padding-top: 0px;padding-right: 5px;padding-bottom: 0px;padding-left: 5px;"><i class="fa fa-chevron-down"></i></button>
+    </div>
+<div class="col-sm-4 col-md-12">
+    <div class="card" id="card">
+                <div class="table-responsive" >
+                    <table id="dynamic" class="table table-striped" class="table table-hover">
+                        <thead class="sticky" style="padding:20px">
+                        <tr onClick='test = this.rowIndex; console.log("_"+test);'>
+                         <!--       <th style="padding: 1px;">Column 1</th>
+                                <th style="padding: 1px;">Column 2</th>-->
+                                <th class="sticky" style="padding: 0; width: 1%; text-align:center">#</th>
+                                <th class="sticky" style="padding: 0; text-align:center">Name</th>
+                                <th class="sticky" style="padding: 0; text-align:center">x</th>
+                                <th class="sticky" style="padding: 0; text-align:center">y</th>
+                                <th class="sticky" style="padding: 0; text-align:center">z</th>
+                                <th class="sticky" style="padding: 0; width: 1%; text-align:center">x2</th>
+                                <th class="sticky" style="padding: 0; text-align:center">y2</th>
+                                <th class="sticky" style="padding: 0; text-align:center">z2</th>
+                                <th class="sticky" style="padding: 0; text-align:center">ox</th>
+                                <th class="sticky" style="padding: 0; text-align:center">oy</th>
+                                <th class="sticky" style="padding: 0; text-align:center">oz</th>
+                                <th class="sticky" style="padding: 0; text-align:center">absolute</th>
+                                <th class="sticky" style="padding: 0; text-align:center">v</th>
+                            </tr>
+                        </thead>
+
+                    <tbody>
+                       {{ formset.management_form }}
+                        {% for form in formset %}
+                            {% if forloop.first %}
+                            {% endif %}
+                            <tr onClick='test = this.rowIndex;'>
+                                {% for field in form %}
+                                    <td style="padding:0;width:25%">{{ field }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+        </div>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}
+
+
+
+
